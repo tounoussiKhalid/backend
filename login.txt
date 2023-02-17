@@ -1,0 +1,59 @@
+password for sys : root
+
+
+CREATE TABLE users (
+  id NUMBER ,
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50),
+  birthdate DATE,
+  city VARCHAR2(50)
+);
+
+
+ALTER TABLE users ADD (
+  CONSTRAINT users_pk PRIMARY KEY (ID));
+
+CREATE SEQUENCE users_seq;
+
+
+CREATE OR REPLACE TRIGGER users_id_generate 
+BEFORE INSERT ON users 
+FOR EACH ROW
+WHEN (new.id IS NULL)
+BEGIN
+  SELECT users_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+/
+
+
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('John', 'Doe', TO_DATE('1980-01-01','YYYY-MM-DD'), 'New York');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('Jane', 'Doe', TO_DATE('1985-05-05','YYYY-MM-DD'), 'Los Angeles');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('James', 'Smith', TO_DATE('1990-07-07','YYYY-MM-DD'), 'Chicago');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('Emily', 'Johnson', TO_DATE('1995-09-09','YYYY-MM-DD'), 'Houston');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('Michael', 'Williams', TO_DATE('2000-11-11','YYYY-MM-DD'), 'Phoenix');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('Sarah', 'Jones', TO_DATE('1985-02-02','YYYY-MM-DD'), 'Philadelphia');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('David', 'Brown', TO_DATE('1990-03-03','YYYY-MM-DD'), 'San Antonio');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('Jennifer', 'Davis', TO_DATE('1995-04-04','YYYY-MM-DD'), 'San Diego');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('William', 'Miller', TO_DATE('2000-05-05','YYYY-MM-DD'), 'Dallas');
+INSERT INTO users (first_name, last_name, birthdate, city) VALUES ('Elizabeth', 'Wilson', TO_DATE('1980-06-06','YYYY-MM-DD'), 'San Jose');
+
+
+mvnw install
+docker build -t myorg/myapp .
+docker run --network=users_app_network -e DB_HOST=172.28.143.13 --name backend -d -p 8989:8090 myorg/myapp 
+
+
+
+
+docker run -d -p 49161:1521 --network=users_app_network -e ORACLE_ALLOW_REMOTE=true oracleinanutshell/oracle-xe-11g
+
+docker exec -it 4f8435647566 /bin/bash
+
+
+// spring boot app
+
+
+
+apk add --no-cache curl
