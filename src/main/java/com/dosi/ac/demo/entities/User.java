@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Date;
 
+/**
+ * The type User.
+ */
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @Data
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "first_name", "last_name" }) })

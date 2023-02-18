@@ -20,6 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.sql.Date;
 import java.util.Optional;
 
+/**
+ * The type User repository test.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -28,13 +31,24 @@ public class UserRepositoryTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * The Object mapper.
+     */
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * The Birthdate.
+     */
     final String BIRTHDATE = "1999-06-30";
 
+    /**
+     * Test create user.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testCreateUser() throws Exception {
         Optional<User> optionalUser = userRepository.findByFirstNameAndLastName("John", "Doe");
@@ -66,6 +80,11 @@ public class UserRepositoryTest {
                 .andExpect(jsonPath("$.city").value(user.getCity()));
     }
 
+    /**
+     * Test get user by id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetUserById() throws Exception {
         Optional<User> optionalUser = userRepository.findByFirstNameAndLastName("John", "Doe");
@@ -91,6 +110,11 @@ public class UserRepositoryTest {
                 .andExpect(jsonPath("$.city").value(user.getCity()));
     }
 
+    /**
+     * Test update user.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testUpdateUser() throws Exception {
         Optional<User> optionalUser = userRepository.findByFirstNameAndLastName("John", "Doe");
@@ -134,6 +158,11 @@ public class UserRepositoryTest {
                 .andExpect(jsonPath("$.city").value(user.getCity()));
     }
 
+    /**
+     * Test delete user.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testDeleteUser() throws Exception {
         User user = userRepository.save( User.builder()
